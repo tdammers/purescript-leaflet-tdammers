@@ -1,5 +1,10 @@
 {
   "name": "purescript-leaflet",
+  "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "git://github.com/tdammers/purescript-leaflet"
+  },
   "ignore": [
     "**/.*",
     "node_modules",
