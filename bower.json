@@ -1,9 +1,9 @@
 {
-  "name": "purescript-leaflet",
+  "name": "purescript-leaflet-tdammers",
   "license": "MIT",
   "repository": {
     "type": "git",
-    "url": "git://github.com/tdammers/purescript-leaflet"
+    "url": "git://github.com/tdammers/purescript-leaflet-tdammers"
   },
   "ignore": [
     "**/.*",
