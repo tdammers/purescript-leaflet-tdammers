@@ -15,7 +15,8 @@
     "purescript-eff": "^3.0.0",
     "purescript-prelude": "^3.0.0",
     "purescript-console": "^3.0.0",
-    "leaflet": "^1.0.3"
+    "leaflet": "^1.0.3",
+    "purescript-arrays": "^4.0.1"
   },
   "devDependencies": {
     "purescript-psci-support": "^3.0.0"

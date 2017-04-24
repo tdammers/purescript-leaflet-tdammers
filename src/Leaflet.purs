@@ -5,6 +5,7 @@ module Leaflet
 , Layer
 , tileLayer
 , addLayer
+, TileLayerOption (..)
 , LatLng
 , Latitude
 , Longitude
@@ -36,8 +37,13 @@ import Prelude ( Unit
                , show
                , (<>)
                , id
+               , (<<<)
+               , ($)
                )
+import Prelude as P
 import Control.Monad.Eff
+import Data.Array as Array
+import Data.Tuple (Tuple (..), fst, snd)
 
 -- | Anything that uses Leaflet has a `LEAFLET` effect.
 foreign import data LEAFLET :: Effect
@@ -111,9 +117,54 @@ foreign import map :: forall e
 -- | - `{s}`: subdomain
 -- |
 -- | Example: `"http://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"`
-foreign import tileLayer :: forall e
+foreign import tileLayerJS :: forall e
                             . UrlTemplate
+                           -> TileLayerOptions
                            -> Eff (leaflet :: LEAFLET | e) Layer
+
+foreign import mkTileLayerOptionsJS :: (forall a. Tuple String a -> String)
+                                    -> (forall b. Tuple b OptVal -> OptVal)
+                                    -> Array (Tuple String OptVal)
+                                    -> TileLayerOptions
+
+mkTileLayerOptions :: Array TileLayerOption -> TileLayerOptions
+mkTileLayerOptions optlist =
+  mkTileLayerOptionsJS fst snd $ P.map toTileLayerOptionJS optlist
+                                    
+foreign import data TileLayerOptions :: Type
+foreign import data OptVal :: Type
+
+foreign import optValStr :: String -> OptVal
+foreign import optValNumber :: Number -> OptVal
+foreign import optValInt :: Int -> OptVal
+foreign import optValBoolean :: Boolean -> OptVal
+
+data TileLayerOption
+  = TileLayerMinZoom Int
+  | TileLayerMaxZoom Int
+  | TileLayerTileSize Int
+  | TileLayerOpacity Number
+  | TileLayerUpdateWhenZooming Boolean
+  | TileLayerUpdateInterval Number
+  | TileLayerZIndex Int
+
+toTileLayerOptionJS :: TileLayerOption -> Tuple String OptVal
+toTileLayerOptionJS = case _ of
+  TileLayerMinZoom z -> Tuple "minZoom" (optValInt z)
+  TileLayerMaxZoom z -> Tuple "maxZoom" (optValInt z)
+  TileLayerTileSize z -> Tuple "tileSize" (optValInt z)
+  TileLayerOpacity z -> Tuple "opacity" (optValNumber z)
+  TileLayerUpdateWhenZooming z -> Tuple "updateWhenZooming" (optValBoolean z)
+  TileLayerUpdateInterval z -> Tuple "updateInterval" (optValNumber z)
+  TileLayerZIndex z -> Tuple "zIndex" (optValInt z)
+
+tileLayer :: forall e
+          . UrlTemplate
+         -> Array TileLayerOption
+         -> Eff (leaflet :: LEAFLET | e) Layer
+tileLayer url optionList = do
+  let options = mkTileLayerOptions optionList
+  tileLayerJS url options
 
 -- | Add a layer to a map
 foreign import addLayer :: forall e
