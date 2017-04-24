@@ -1,0 +1,29 @@
+{
+  "name": "purescript-leaflet-tdammers",
+  "version": "0.0.5",
+  "description": "Purescript bindings for leaflet.js",
+  "main": "index.js",
+  "directories": {
+    "example": "example",
+    "test": "test"
+  },
+  "scripts": {
+    "example": "pulp -w browserify --to example/index.js -I example/src",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/tdammers/purescript-leaflet-tdammers.git"
+  },
+  "keywords": [
+    "purescript",
+    "leaflet",
+    "maps"
+  ],
+  "author": "Tobias Dammers <tdammers@gmail.com>",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/tdammers/purescript-leaflet-tdammers/issues"
+  },
+  "homepage": "https://github.com/tdammers/purescript-leaflet-tdammers#readme"
+}
