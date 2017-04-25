@@ -11,7 +11,10 @@ exports.mkOptionsJS =
         }
     }
 
-exports.optValStr = function (str) { return str }
-exports.optValNumber = function (n) { return n }
-exports.optValInt = function (n) { return n }
-exports.optValBoolean = function (n) { return n }
+var identity = function (a) { return a; }
+
+exports.optValString = identity
+exports.optValNumber = identity
+exports.optValInt = identity
+exports.optValBoolean = identity
+exports.optValArray = identity

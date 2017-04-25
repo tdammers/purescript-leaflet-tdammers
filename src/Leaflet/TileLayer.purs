@@ -29,6 +29,9 @@ foreign import tileLayerJS :: forall e
                            -> Options
                            -> Eff (leaflet :: LEAFLET | e) Layer
 
+-- | Options to be passed to a tile layer at construction time. See
+-- | http://leafletjs.com/reference-1.0.3.html#tilelayer for an explanation of
+-- | each option.
 data TileLayerOption
   = TileLayerMinZoom Int
   | TileLayerMaxZoom Int
@@ -39,14 +42,14 @@ data TileLayerOption
   | TileLayerZIndex Int
 
 instance isOptionTileLayerOption :: IsOption TileLayerOption where
-  mkOption = case _ of
-    TileLayerMinZoom z -> Tuple "minZoom" (optValInt z)
-    TileLayerMaxZoom z -> Tuple "maxZoom" (optValInt z)
-    TileLayerTileSize z -> Tuple "tileSize" (optValInt z)
-    TileLayerOpacity z -> Tuple "opacity" (optValNumber z)
-    TileLayerUpdateWhenZooming z -> Tuple "updateWhenZooming" (optValBoolean z)
-    TileLayerUpdateInterval z -> Tuple "updateInterval" (optValNumber z)
-    TileLayerZIndex z -> Tuple "zIndex" (optValInt z)
+  toOption = case _ of
+    TileLayerMinZoom z -> mkOption "minZoom" z
+    TileLayerMaxZoom z -> mkOption "maxZoom" z
+    TileLayerTileSize z -> mkOption "tileSize" z
+    TileLayerOpacity z -> mkOption "opacity" z
+    TileLayerUpdateWhenZooming z -> mkOption "updateWhenZooming" z
+    TileLayerUpdateInterval z -> mkOption "updateInterval" z
+    TileLayerZIndex z -> mkOption "zIndex" z
 
 -- | `tileLayer template options` creates a new
 -- | [tile layer](http://leafletjs.com/reference-1.0.3.html#tilelayer) using
