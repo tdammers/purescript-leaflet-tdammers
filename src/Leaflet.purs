@@ -33,9 +33,6 @@ import Leaflet.Map
   , onZoom
   , setView
   ) as L
--- import Leaflet.Options
---   (
---   ) as L
 import Leaflet.TileLayer
   (tileLayer
   , UrlTemplate
