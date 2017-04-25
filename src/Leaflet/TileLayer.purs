@@ -1,4 +1,8 @@
 module Leaflet.TileLayer
+( tileLayer
+, UrlTemplate (..)
+, TileLayerOption (..)
+)
 where
 
 import Prelude ( Unit

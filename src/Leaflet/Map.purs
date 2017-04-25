@@ -1,4 +1,24 @@
 module Leaflet.Map
+( Layer
+, Map
+, MouseEvent
+, addLayer
+, getCenter
+, getZoom
+, invalidateSize
+, map
+, onClick
+, onDblClick
+, onMouseDown
+, onMouseEvent
+, onMouseMove
+, onMouseOut
+, onMouseOver
+, onMouseUp
+, onMove
+, onZoom
+, setView
+)
 where
 
 import Prelude ( Unit
