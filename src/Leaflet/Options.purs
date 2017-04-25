@@ -12,10 +12,12 @@ import Prelude ( Unit
 import Prelude as P
 import Data.Array as Array
 import Data.Tuple (Tuple (..), fst, snd)
+import Data.Maybe (Maybe (..))
 
 foreign import data OptVal :: Type
 foreign import data Options :: Type
 
+foreign import optValNull :: OptVal
 foreign import optValString :: String -> OptVal
 foreign import optValNumber :: Number -> OptVal
 foreign import optValInt :: Int -> OptVal
@@ -43,6 +45,11 @@ instance isOptValArray :: IsOptVal a => IsOptVal (Array a) where
 instance isOptValTuple :: (IsOptVal a, IsOptVal b)
                        => IsOptVal (Tuple a b) where
   toOptVal (Tuple x y) = optValArray [ toOptVal x, toOptVal y ]
+
+instance isOptValMaybe :: IsOptVal a
+                       => IsOptVal (Maybe a) where
+  toOptVal (Just x) = toOptVal x
+  toOptVal Nothing = optValNull
 
 mkOption :: ∀ a. IsOptVal a => String -> a -> Tuple String OptVal
 mkOption name val = Tuple name (toOptVal val)

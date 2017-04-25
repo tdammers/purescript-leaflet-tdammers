@@ -13,5 +13,6 @@ main = do
             "//{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
             [ L.TileLayerMinZoom 9
             , L.TileLayerMaxZoom 11
+            , L.TileLayerSubdomains [ "a", "b", "c" ]
             ]
   L.addLayer tiles m

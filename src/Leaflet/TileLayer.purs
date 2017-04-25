@@ -20,6 +20,7 @@ import Data.Tuple (Tuple (..), fst, snd)
 import Leaflet.Types
 import Leaflet.Options
 import Leaflet.Map (Layer, Map)
+import Data.Maybe (Maybe (..))
 
 -- | A URL template for tile layers.
 type UrlTemplate = String
@@ -35,21 +36,27 @@ foreign import tileLayerJS :: forall e
 data TileLayerOption
   = TileLayerMinZoom Int
   | TileLayerMaxZoom Int
+  | TileLayerMinNativeZoom (Maybe Int)
+  | TileLayerMaxNativeZoom (Maybe Int)
   | TileLayerTileSize Int
   | TileLayerOpacity Number
   | TileLayerUpdateWhenZooming Boolean
   | TileLayerUpdateInterval Number
   | TileLayerZIndex Int
+  | TileLayerSubdomains (Array String)
 
 instance isOptionTileLayerOption :: IsOption TileLayerOption where
   toOption = case _ of
     TileLayerMinZoom z -> mkOption "minZoom" z
     TileLayerMaxZoom z -> mkOption "maxZoom" z
+    TileLayerMinNativeZoom z -> mkOption "minNativeZoom" z
+    TileLayerMaxNativeZoom z -> mkOption "maxNativeZoom" z
     TileLayerTileSize z -> mkOption "tileSize" z
     TileLayerOpacity z -> mkOption "opacity" z
     TileLayerUpdateWhenZooming z -> mkOption "updateWhenZooming" z
     TileLayerUpdateInterval z -> mkOption "updateInterval" z
     TileLayerZIndex z -> mkOption "zIndex" z
+    TileLayerSubdomains z -> mkOption "subdomains" z
 
 -- | `tileLayer template options` creates a new
 -- | [tile layer](http://leafletjs.com/reference-1.0.3.html#tilelayer) using

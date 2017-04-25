@@ -13,6 +13,7 @@ exports.mkOptionsJS =
 
 var identity = function (a) { return a; }
 
+exports.optValNull = null
 exports.optValString = identity
 exports.optValNumber = identity
 exports.optValInt = identity
