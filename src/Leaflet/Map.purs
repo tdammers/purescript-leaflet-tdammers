@@ -34,6 +34,7 @@ import Control.Monad.Eff
 import Data.Array as Array
 import Data.Tuple (Tuple (..), fst, snd)
 import Leaflet.Types
+import Leaflet.LatLng
 
 -- | A map object (http://leafletjs.com/reference-1.0.3.html#map-example)
 foreign import data Map :: Type

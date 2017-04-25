@@ -19,3 +19,4 @@ exports.optValNumber = identity
 exports.optValInt = identity
 exports.optValBoolean = identity
 exports.optValArray = identity
+exports.unsafeOptVal = identity

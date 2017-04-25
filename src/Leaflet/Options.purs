@@ -13,6 +13,7 @@ import Prelude as P
 import Data.Array as Array
 import Data.Tuple (Tuple (..), fst, snd)
 import Data.Maybe (Maybe (..))
+import Leaflet.LatLng
 
 foreign import data OptVal :: Type
 foreign import data Options :: Type
@@ -23,6 +24,7 @@ foreign import optValNumber :: Number -> OptVal
 foreign import optValInt :: Int -> OptVal
 foreign import optValBoolean :: Boolean -> OptVal
 foreign import optValArray :: Array OptVal -> OptVal
+foreign import unsafeOptVal :: ∀ a. a -> OptVal
 
 class IsOptVal a where
   toOptVal :: a -> OptVal
@@ -50,6 +52,12 @@ instance isOptValMaybe :: IsOptVal a
                        => IsOptVal (Maybe a) where
   toOptVal (Just x) = toOptVal x
   toOptVal Nothing = optValNull
+
+instance isOptValLatLng :: IsOptVal LatLng where
+  toOptVal = unsafeOptVal
+
+instance isOptValLatLngBounds :: IsOptVal LatLngBounds where
+  toOptVal = unsafeOptVal
 
 mkOption :: ∀ a. IsOptVal a => String -> a -> Tuple String OptVal
 mkOption name val = Tuple name (toOptVal val)

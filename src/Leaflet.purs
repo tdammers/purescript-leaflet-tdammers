@@ -5,12 +5,19 @@ where
 
 import Leaflet.Types
   ( LEAFLET
-  , LatLng
-  , Latitude
-  , Longitude
   , Pixels
   , Point
   , Zoom
+  ) as L
+import Leaflet.LatLng
+  ( Latitude
+  , Longitude
+  , LatLng
+  , latlng
+  , lat
+  , lng
+  , LatLngBounds
+  , latLngBounds
   ) as L
 import Leaflet.Map
   ( Layer
