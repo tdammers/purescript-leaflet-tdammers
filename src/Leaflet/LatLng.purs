@@ -37,6 +37,9 @@ type Longitude = Number
 -- | but we only expose this one type.
 foreign import data LatLng :: Type
 
+instance eqLatLng :: Eq LatLng where
+  a == b = lat a == lat b && lng a == lng b
+
 -- | Construct a `LatLng` record from separate components
 foreign import latlng :: Latitude -> Longitude -> LatLng
 
