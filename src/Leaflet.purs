@@ -43,5 +43,4 @@ import Leaflet.Map
 import Leaflet.TileLayer
   (tileLayer
   , UrlTemplate
-  , TileLayerOption (..)
   ) as L

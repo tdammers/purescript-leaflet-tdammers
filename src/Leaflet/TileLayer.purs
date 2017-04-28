@@ -1,7 +1,30 @@
 module Leaflet.TileLayer
 ( tileLayer
 , UrlTemplate (..)
-, TileLayerOption (..)
+, Option (..)
+, minZoom
+, maxZoom
+, minNativeZoom
+, maxNativeZoom
+, subdomains
+, errorTileUrl
+, zoomOffset
+, tMS
+, zoomReverse
+, detectRetina
+, crossOrigin
+, gridSize
+, opacity
+, updateWhenIdle
+, updateWhenZooming
+, updateInterval
+, zIndex
+, bounds
+, noWrap
+, pane
+, className
+, keepBuffer
+, attribution
 )
 where
 
@@ -22,6 +45,7 @@ import Leaflet.LatLng
 import Leaflet.Options
 import Leaflet.Map (Layer, Map)
 import Data.Maybe (Maybe (..))
+import Leaflet.GridLayer as GridLayer
 
 -- | A URL template for tile layers.
 type UrlTemplate = String
@@ -34,60 +58,73 @@ foreign import tileLayerJS :: forall e
 -- | Options to be passed to a tile layer at construction time. See
 -- | http://leafletjs.com/reference-1.0.3.html#tilelayer for an explanation of
 -- | each option.
-data TileLayerOption
-  = TileLayerMinZoom Int
-  | TileLayerMaxZoom Int
-  | TileLayerMinNativeZoom (Maybe Int)
-  | TileLayerMaxNativeZoom (Maybe Int)
-  | TileLayerSubdomains (Array String)
-  | TileLayerErrorTileUrl String
-  | TileLayerZoomOffset Int
-  | TileLayerTMS Boolean
-  | TileLayerZoomReverse Boolean
-  | TileLayerDetectRetina Boolean
-  | TileLayerCrossOrigin Boolean
-  -- inherited from GridLayer
-  | TileLayerTileSize Int
-  | TileLayerOpacity Number
-  | TileLayerUpdateWhenIdle Boolean
-  | TileLayerUpdateWhenZooming Boolean
-  | TileLayerUpdateInterval Number
-  | TileLayerZIndex Int
-  | TileLayerBounds LatLngBounds
-  | TileLayerNoWrap Boolean
-  | TileLayerPane String
-  | TileLayerClassName String
-  | TileLayerKeepBuffer Int
-  -- inherited from Layer
-  | TileLayerAttribution String
+data Option
+  = MinZoom Int
+  | MaxZoom Int
+  | MinNativeZoom (Maybe Int)
+  | MaxNativeZoom (Maybe Int)
+  | Subdomains (Array String)
+  | ErrorTileUrl String
+  | ZoomOffset Int
+  | TMS Boolean
+  | ZoomReverse Boolean
+  | DetectRetina Boolean
+  | CrossOrigin Boolean
+  | GridLayerOption GridLayer.Option
 
-instance isOptionTileLayerOption :: IsOption TileLayerOption where
+minZoom :: Int -> Option
+minZoom = MinZoom 
+maxZoom :: Int -> Option
+maxZoom = MaxZoom 
+minNativeZoom :: (Maybe Int) -> Option
+minNativeZoom = MinNativeZoom 
+maxNativeZoom :: (Maybe Int) -> Option
+maxNativeZoom = MaxNativeZoom 
+subdomains :: (Array String) -> Option
+subdomains = Subdomains 
+errorTileUrl :: String -> Option
+errorTileUrl = ErrorTileUrl 
+zoomOffset :: Int -> Option
+zoomOffset = ZoomOffset 
+tMS :: Boolean -> Option
+tMS = TMS 
+zoomReverse :: Boolean -> Option
+zoomReverse = ZoomReverse 
+detectRetina :: Boolean -> Option
+detectRetina = DetectRetina 
+crossOrigin :: Boolean -> Option
+crossOrigin = CrossOrigin 
+
+gridLayerOption :: GridLayer.Option -> Option
+gridLayerOption = GridLayerOption 
+
+gridSize = gridLayerOption <<< GridLayer.gridSize
+opacity = gridLayerOption <<< GridLayer.opacity
+updateWhenIdle = gridLayerOption <<< GridLayer.updateWhenIdle
+updateWhenZooming = gridLayerOption <<< GridLayer.updateWhenZooming
+updateInterval = gridLayerOption <<< GridLayer.updateInterval
+zIndex = gridLayerOption <<< GridLayer.zIndex
+bounds = gridLayerOption <<< GridLayer.bounds
+noWrap = gridLayerOption <<< GridLayer.noWrap
+pane = gridLayerOption <<< GridLayer.pane
+className = gridLayerOption <<< GridLayer.className
+keepBuffer = gridLayerOption <<< GridLayer.keepBuffer
+attribution = gridLayerOption <<< GridLayer.attribution
+
+instance isOptionTileLayerOption :: IsOption Option where
   toOption = case _ of
-    TileLayerMinZoom z -> mkOption "minZoom" z
-    TileLayerMaxZoom z -> mkOption "maxZoom" z
-    TileLayerMinNativeZoom z -> mkOption "minNativeZoom" z
-    TileLayerMaxNativeZoom z -> mkOption "maxNativeZoom" z
-    TileLayerSubdomains z -> mkOption "subdomains" z
-    TileLayerErrorTileUrl z -> mkOption "errorTileUrl" z
-    TileLayerZoomOffset z -> mkOption "zoomOffset" z
-    TileLayerTMS z -> mkOption "tms" z
-    TileLayerZoomReverse z -> mkOption "zoomReverse" z
-    TileLayerDetectRetina z -> mkOption "detectRetina" z
-    TileLayerCrossOrigin z -> mkOption "crossOrigin" z
-    -- inherited from GridLayer
-    TileLayerTileSize z -> mkOption "tileSize" z
-    TileLayerOpacity z -> mkOption "opacity" z
-    TileLayerUpdateWhenIdle z -> mkOption "updateWhenIdle" z
-    TileLayerUpdateWhenZooming z -> mkOption "updateWhenZooming" z
-    TileLayerUpdateInterval z -> mkOption "updateInterval" z
-    TileLayerZIndex z -> mkOption "zIndex" z
-    TileLayerBounds z -> mkOption "bounds" z
-    TileLayerNoWrap z -> mkOption "noWrap" z
-    TileLayerPane z -> mkOption "pane" z
-    TileLayerClassName z -> mkOption "className" z
-    TileLayerKeepBuffer z -> mkOption "keepBuffer" z
-    -- inherited from Layer
-    TileLayerAttribution z -> mkOption "attribution" z
+    MinZoom z -> mkOption "minZoom" z
+    MaxZoom z -> mkOption "maxZoom" z
+    MinNativeZoom z -> mkOption "minNativeZoom" z
+    MaxNativeZoom z -> mkOption "maxNativeZoom" z
+    Subdomains z -> mkOption "subdomains" z
+    ErrorTileUrl z -> mkOption "errorTileUrl" z
+    ZoomOffset z -> mkOption "zoomOffset" z
+    TMS z -> mkOption "tms" z
+    ZoomReverse z -> mkOption "zoomReverse" z
+    DetectRetina z -> mkOption "detectRetina" z
+    CrossOrigin z -> mkOption "crossOrigin" z
+    GridLayerOption o -> toOption o
 
 -- | `tileLayer template options` creates a new
 -- | [tile layer](http://leafletjs.com/reference-1.0.3.html#tilelayer) using
@@ -103,7 +140,7 @@ instance isOptionTileLayerOption :: IsOption TileLayerOption where
 -- | Example: `"http://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"`
 tileLayer :: forall e
           . UrlTemplate
-         -> Array TileLayerOption
+         -> Array Option
          -> Eff (leaflet :: LEAFLET | e) Layer
 tileLayer url optionList = do
   let options = mkOptions optionList

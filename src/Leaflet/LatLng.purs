@@ -27,6 +27,8 @@ module Leaflet.LatLng
 )
 where
 
+import Prelude
+
 -- | Geographic latitude
 type Latitude = Number
 
@@ -38,7 +40,7 @@ type Longitude = Number
 foreign import data LatLng :: Type
 
 instance eqLatLng :: Eq LatLng where
-  a == b = lat a == lat b && lng a == lng b
+  eq = \a b -> lat a == lat b && lng a == lng b
 
 -- | Construct a `LatLng` record from separate components
 foreign import latlng :: Latitude -> Longitude -> LatLng
