@@ -27,20 +27,16 @@ import Leaflet.Map
   , getZoom
   , invalidateSize
   , map
-  , onClick
-  , onDblClick
-  , onMouseDown
-  , onMouseEvent
-  , onMouseMove
-  , onMouseOut
-  , onMouseOver
-  , onMouseUp
   , onMove
   , onZoom
   , setView
   ) as L
 import Leaflet.MouseInteraction
   ( MouseEvent (..)
+  , MouseEventType (..)
+  , MouseEventHandle
+  , class MouseInteraction
+  , onMouseEvent
   ) as L
 import Leaflet.TileLayer
   (tileLayer

@@ -91,13 +91,26 @@ var mkMouseEvent = function (ev) {
     }
 }
 
-exports.onMouseEvent = function (eventName) {
+exports.onMouseEventJS = function (eventName) {
+    return function (map) {
+        return function (action) {
+            return function () {
+                var handler = function (ev) {
+                    action(mkMouseEvent(ev))()
+                }
+                map.on(eventName, handler)
+                return handler
+            }
+        }
+    }
+}
+
+exports.offMouseEventJS = function (eventName) {
     return function (map) {
         return function (handler) {
             return function () {
-                map.on(eventName, function (ev) {
-                    handler(mkMouseEvent(ev))()
-                })
+                map.off(eventName, handler)
+                return null
             }
         }
     }

@@ -6,14 +6,6 @@ module Leaflet.Map
 , getZoom
 , invalidateSize
 , map
-, onClick
-, onDblClick
-, onMouseDown
-, onMouseEvent
-, onMouseMove
-, onMouseOut
-, onMouseOver
-, onMouseUp
 , onMove
 , onZoom
 , setView
@@ -93,58 +85,20 @@ foreign import onMove :: forall e
                       -> (LatLng -> e Unit)
                       -> e Unit
 
--- | Subscribe to a mouse even by name.
-foreign import onMouseEvent :: forall e
-                             . String
-                            -> Map
-                            -> (MouseEvent -> Eff e Unit)
-                            -> Eff (leaflet :: LEAFLET | e) Unit
+-- | Subscribe to a mouse event by name.
+foreign import onMouseEventJS :: forall e
+                               . String
+                              -> Map
+                              -> (MouseEvent -> Eff e Unit)
+                              -> Eff (leaflet :: LEAFLET | e) MouseEventHandle
 
--- | Subscribe to the `mousemove` event
-onMouseMove :: forall e
-             . Map
-            -> (MouseEvent -> Eff e Unit)
-            -> Eff (leaflet :: LEAFLET | e) Unit
-onMouseMove = onMouseEvent "mousemove"
+-- | Unsubscribe from a mouse event by name.
+foreign import offMouseEventJS :: forall e
+                                . String
+                               -> Map
+                               -> MouseEventHandle
+                               -> Eff (leaflet :: LEAFLET | e) Unit
 
--- | Subscribe to the `mouseover` event
-onMouseOver :: forall e
-             . Map
-            -> (MouseEvent -> Eff e Unit)
-            -> Eff (leaflet :: LEAFLET | e) Unit
-onMouseOver = onMouseEvent "mouseover"
-
--- | Subscribe to the `mouseout` event
-onMouseOut :: forall e
-            . Map
-           -> (MouseEvent -> Eff e Unit)
-           -> Eff (leaflet :: LEAFLET | e) Unit
-onMouseOut = onMouseEvent "mouseout"
-
--- | Subscribe to the `mouseup` event (mouse button pressed)
-onMouseUp :: forall e
-           . Map
-          -> (MouseEvent -> Eff e Unit)
-          -> Eff (leaflet :: LEAFLET | e) Unit
-onMouseUp = onMouseEvent "mouseup"
-
--- | Subscribe to the `mousedown` event (mouse button released)
-onMouseDown :: forall e
-             . Map
-            -> (MouseEvent -> Eff e Unit)
-            -> Eff (leaflet :: LEAFLET | e) Unit
-onMouseDown = onMouseEvent "mousedown"
-
--- | Subscribe to the `click` event
-onClick :: forall e
-         . Map
-        -> (MouseEvent -> Eff e Unit)
-        -> Eff (leaflet :: LEAFLET | e) Unit
-onClick = onMouseEvent "click"
-
--- | Subscribe to the `dblclick` event (double click)
-onDblClick :: forall e
-            . Map
-           -> (MouseEvent -> Eff e Unit)
-           -> Eff (leaflet :: LEAFLET | e) Unit
-onDblClick = onMouseEvent "dblclick"
+instance mouseInteractionMap :: MouseInteraction Map where
+  onMouseEvent = onMouseEventJS <<< mouseEventKey
+  offMouseEvent = offMouseEventJS <<< mouseEventKey
