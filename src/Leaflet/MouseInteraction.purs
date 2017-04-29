@@ -5,13 +5,17 @@ import Prelude
 import Leaflet.LatLng
 import Leaflet.Types
 import Control.Monad.Eff
+import Data.Newtype
 
 -- | Metadata for a mouse event.
-type MouseEvent =
+newtype MouseEvent =
+  MouseEvent
       { latlng :: LatLng -- ^ Mouse position in geocoordinate space
       , layerPoint :: Point -- ^ Mouse position relative to the layers
       , containerPoint :: Point -- ^ Mouse position relative to the container element
       }
+
+derive instance newtypeMouseEvent :: Newtype MouseEvent _
 
 foreign import data MouseEventHandle :: Type
 
@@ -32,15 +36,3 @@ mouseEventKey MouseUp = "mouseup"
 mouseEventKey MouseDown = "mousedown"
 mouseEventKey Click = "click"
 mouseEventKey DblClick = "dblclick"
-
-class MouseInteraction a where
-  onMouseEvent :: forall e
-                . MouseEventType
-               -> a
-               -> (MouseEvent -> Eff e Unit)
-               -> Eff (leaflet :: LEAFLET | e) MouseEventHandle
-  offMouseEvent :: forall e
-                 . MouseEventType
-                -> a
-                -> MouseEventHandle
-                -> Eff (leaflet :: LEAFLET | e) Unit

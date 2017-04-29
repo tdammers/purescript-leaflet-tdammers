@@ -27,6 +27,7 @@ import Data.Tuple (Tuple (..), fst, snd)
 import Leaflet.Types
 import Leaflet.LatLng
 import Leaflet.MouseInteraction
+import Leaflet.Evented
 
 -- | A map object (http://leafletjs.com/reference-1.0.3.html#map-example)
 foreign import data Map :: Type
@@ -99,6 +100,6 @@ foreign import offMouseEventJS :: forall e
                                -> MouseEventHandle
                                -> Eff (leaflet :: LEAFLET | e) Unit
 
-instance mouseInteractionMap :: MouseInteraction Map where
-  onMouseEvent = onMouseEventJS <<< mouseEventKey
-  offMouseEvent = offMouseEventJS <<< mouseEventKey
+instance eventedMouseMap :: Evented MouseEventType MouseEvent MouseEventHandle Map where
+  on = onMouseEventJS <<< mouseEventKey
+  off = offMouseEventJS <<< mouseEventKey

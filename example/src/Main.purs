@@ -22,6 +22,6 @@ main = do
                   (L.latlng 51.0 1.0))
             ]
   L.addLayer tiles m
-  h <- L.onMouseEvent L.MouseMove m $ \e -> do
+  h <- L.on L.MouseMove m $ \(L.MouseEvent e) -> do
     log $ show [L.lat e.latlng, L.lng e.latlng]
   pure unit

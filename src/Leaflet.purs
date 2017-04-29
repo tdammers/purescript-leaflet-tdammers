@@ -35,8 +35,11 @@ import Leaflet.MouseInteraction
   ( MouseEvent (..)
   , MouseEventType (..)
   , MouseEventHandle
-  , class MouseInteraction
-  , onMouseEvent
+  ) as L
+import Leaflet.Evented
+  ( class Evented
+  , on
+  , off
   ) as L
 import Leaflet.TileLayer
   (tileLayer
