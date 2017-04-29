@@ -74,41 +74,74 @@ data Option
 
 minZoom :: Int -> Option
 minZoom = MinZoom 
+
 maxZoom :: Int -> Option
 maxZoom = MaxZoom 
+
 minNativeZoom :: (Maybe Int) -> Option
 minNativeZoom = MinNativeZoom 
+
 maxNativeZoom :: (Maybe Int) -> Option
 maxNativeZoom = MaxNativeZoom 
+
 subdomains :: (Array String) -> Option
 subdomains = Subdomains 
+
 errorTileUrl :: String -> Option
 errorTileUrl = ErrorTileUrl 
+
 zoomOffset :: Int -> Option
 zoomOffset = ZoomOffset 
+
 tMS :: Boolean -> Option
 tMS = TMS 
+
 zoomReverse :: Boolean -> Option
 zoomReverse = ZoomReverse 
+
 detectRetina :: Boolean -> Option
 detectRetina = DetectRetina 
+
 crossOrigin :: Boolean -> Option
 crossOrigin = CrossOrigin 
 
 gridLayerOption :: GridLayer.Option -> Option
 gridLayerOption = GridLayerOption 
 
+gridSize :: Int -> Option
 gridSize = gridLayerOption <<< GridLayer.gridSize
+
+opacity :: Number -> Option
 opacity = gridLayerOption <<< GridLayer.opacity
+
+updateWhenIdle :: Boolean -> Option
 updateWhenIdle = gridLayerOption <<< GridLayer.updateWhenIdle
+
+updateWhenZooming :: Boolean -> Option
 updateWhenZooming = gridLayerOption <<< GridLayer.updateWhenZooming
+
+updateInterval :: Number -> Option
 updateInterval = gridLayerOption <<< GridLayer.updateInterval
+
+zIndex :: Int -> Option
 zIndex = gridLayerOption <<< GridLayer.zIndex
+
+bounds :: LatLngBounds -> Option
 bounds = gridLayerOption <<< GridLayer.bounds
+
+noWrap :: Boolean -> Option
 noWrap = gridLayerOption <<< GridLayer.noWrap
+
+pane :: String -> Option
 pane = gridLayerOption <<< GridLayer.pane
+
+className :: String -> Option
 className = gridLayerOption <<< GridLayer.className
+
+keepBuffer :: Int -> Option
 keepBuffer = gridLayerOption <<< GridLayer.keepBuffer
+
+attribution :: String -> Option
 attribution = gridLayerOption <<< GridLayer.attribution
 
 instance isOptionTileLayerOption :: IsOption Option where

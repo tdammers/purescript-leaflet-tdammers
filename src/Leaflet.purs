@@ -22,7 +22,6 @@ import Leaflet.LatLng
 import Leaflet.Map
   ( Layer
   , Map
-  , MouseEvent
   , addLayer
   , getCenter
   , getZoom
@@ -39,6 +38,9 @@ import Leaflet.Map
   , onMove
   , onZoom
   , setView
+  ) as L
+import Leaflet.MouseInteraction
+  ( MouseEvent (..)
   ) as L
 import Leaflet.TileLayer
   (tileLayer

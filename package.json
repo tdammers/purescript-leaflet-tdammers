@@ -8,7 +8,8 @@
     "test": "test"
   },
   "scripts": {
-    "example": "pulp -w browserify --to example/index.js -I example/src",
+    "example": "pulp browserify --to example/index.js -I example/src",
+    "build": "pulp build",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "repository": {
