@@ -42,6 +42,9 @@ import Leaflet.Evented
   , off
   ) as L
 import Leaflet.TileLayer
-  (tileLayer
+  ( tileLayer
   , UrlTemplate
+  ) as L
+import Leaflet.Marker
+  ( marker
   ) as L
