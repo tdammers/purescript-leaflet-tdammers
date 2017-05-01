@@ -31,7 +31,7 @@ main = do
         , L.latlng 50.5 0.5
         ]
   _ <- for coords $ \ll -> do
-    marker <- L.marker ll []
+    marker <- L.marker ll [Marker.draggable true]
     L.addLayer marker m
   h <- L.on L.MouseMove m $ \(L.MouseEvent e) -> do
     log $ show [L.lat e.latlng, L.lng e.latlng]

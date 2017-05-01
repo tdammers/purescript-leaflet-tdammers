@@ -1,6 +1,16 @@
 module Leaflet.Marker
 ( marker
 , Option (..)
+, draggable
+, keyboard
+, title
+, alt
+, zIndexOffset
+, opacity
+, riseOnHover
+, riseOffset
+, pane
+, layerOption
 , attribution
 )
 where
