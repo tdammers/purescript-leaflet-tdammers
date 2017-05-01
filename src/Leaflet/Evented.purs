@@ -9,7 +9,7 @@ class Evented t e h a | t -> e, t -> h where
   on:: forall eff
      . t
     -> a
-    -> (e -> Eff eff Unit)
+    -> (e -> Eff (leaflet :: LEAFLET | eff) Unit)
     -> Eff (leaflet :: LEAFLET | eff) h
   off :: forall eff
        . t

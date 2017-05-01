@@ -90,7 +90,7 @@ foreign import onMove :: forall e
 foreign import onMouseEventJS :: forall e
                                . String
                               -> Map
-                              -> (MouseEvent -> Eff e Unit)
+                              -> (MouseEvent -> Eff (leaflet :: LEAFLET | e) Unit)
                               -> Eff (leaflet :: LEAFLET | e) MouseEventHandle
 
 -- | Unsubscribe from a mouse event by name.
