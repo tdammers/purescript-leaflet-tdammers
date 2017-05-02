@@ -33,7 +33,9 @@ import Leaflet.Map
   ) as L
 import Leaflet.Layer
   ( Layer
-  )
+  , class IsLayer
+  , toLayer
+  ) as L
 import Leaflet.MouseInteraction
   ( MouseEvent (..)
   , MouseEventType (..)
@@ -49,5 +51,6 @@ import Leaflet.TileLayer
   , UrlTemplate
   ) as L
 import Leaflet.Marker
-  ( marker
+  ( Marker
+  , marker
   ) as L

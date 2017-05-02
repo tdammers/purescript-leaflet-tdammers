@@ -2,6 +2,8 @@ module Leaflet.Layer
 ( Layer
 , Option (..)
 , attribution
+, class IsLayer
+, toLayer
 )
 where
 
@@ -37,3 +39,9 @@ attribution = Attribution
 instance isOptionLayerOption :: IsOption Option where
   toOption = case _ of
     Attribution z -> mkOption "attribution" z
+
+class IsLayer a where
+  toLayer :: a -> Layer
+
+instance isLayerLayer :: IsLayer Layer where
+  toLayer = id

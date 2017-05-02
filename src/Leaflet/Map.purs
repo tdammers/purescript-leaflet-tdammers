@@ -29,6 +29,7 @@ import Leaflet.LatLng
 import Leaflet.MouseInteraction
 import Leaflet.Evented
 import Leaflet.Layer
+import Unsafe.Coerce (unsafeCoerce)
 
 -- | A map object (http://leafletjs.com/reference-1.0.3.html#map-example)
 foreign import data Map :: Type
@@ -43,9 +44,9 @@ foreign import map :: forall e
 
 -- | Add a layer to a map
 foreign import addLayer :: forall e
-                           . Layer
-                          -> Map
-                          -> Eff (leaflet :: LEAFLET | e) Unit
+                         . Layer
+                        -> Map
+                        -> Eff (leaflet :: LEAFLET | e) Unit
 
 -- | Remove a layer from a map
 foreign import removeLayer :: forall e
@@ -91,20 +92,6 @@ foreign import onMove :: forall e
                       -> (LatLng -> e Unit)
                       -> e Unit
 
--- | Subscribe to a mouse event by name.
-foreign import onMouseEventJS :: forall e
-                               . String
-                              -> Map
-                              -> (MouseEvent -> Eff (leaflet :: LEAFLET | e) Unit)
-                              -> Eff (leaflet :: LEAFLET | e) MouseEventHandle
-
--- | Unsubscribe from a mouse event by name.
-foreign import offMouseEventJS :: forall e
-                                . String
-                               -> Map
-                               -> MouseEventHandle
-                               -> Eff (leaflet :: LEAFLET | e) Unit
-
 instance eventedMouseMap :: Evented MouseEventType MouseEvent MouseEventHandle Map where
-  on = onMouseEventJS <<< mouseEventKey
-  off = offMouseEventJS <<< mouseEventKey
+  on e = onMouseEvent e <<< unsafeCoerce
+  off e = offMouseEvent e <<< unsafeCoerce

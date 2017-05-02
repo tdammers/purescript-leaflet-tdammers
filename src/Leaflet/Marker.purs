@@ -1,5 +1,6 @@
 module Leaflet.Marker
-( marker
+( Marker
+, marker
 , Option (..)
 , draggable
 , keyboard
@@ -32,15 +33,20 @@ import Leaflet.LatLng
 import Leaflet.Options
 import Data.Maybe (Maybe (..))
 import Leaflet.Layer as Layer
-import Leaflet.Layer (Layer)
+import Leaflet.Layer (Layer, class IsLayer)
+import Unsafe.Coerce (unsafeCoerce)
+import Leaflet.Evented
+import Leaflet.MouseInteraction
 
--- | A URL template for tile layers.
-type UrlTemplate = String
+foreign import data Marker :: Type
+
+instance isLayerMarker :: IsLayer Marker where
+  toLayer = unsafeCoerce
 
 foreign import markerJS :: forall e
                             . LatLng
                            -> Options
-                           -> Eff (leaflet :: LEAFLET | e) Layer
+                           -> Eff (leaflet :: LEAFLET | e) Marker
 
 -- | Options to be passed to a marker layer at construction time. See
 -- | http://leafletjs.com/reference-1.0.3.html#marker for an explanation of
@@ -111,9 +117,11 @@ instance isOptionMarkerOption :: IsOption Option where
 marker :: forall e
           . LatLng
          -> Array Option
-         -> Eff (leaflet :: LEAFLET | e) Layer
+         -> Eff (leaflet :: LEAFLET | e) Marker
 marker position optionList = do
   let options = mkOptions optionList
   markerJS position options
 
-
+instance eventedMouseMarker :: Evented MouseEventType MouseEvent MouseEventHandle Marker where
+  on e = onMouseEvent e <<< unsafeCoerce
+  off e = offMouseEvent e <<< unsafeCoerce

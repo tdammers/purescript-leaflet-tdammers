@@ -1,20 +1,27 @@
-exports.markerJS =
-    function (position) {
-        return function (options) {
-            return function () {
-                return L.marker(position, options)
+var mkMouseEvent = function (ev) {
+    return {
+        latlng: ev.latlng,
+        layerPoint:
+            {
+                x: ev.layerPoint.x,
+                y: ev.layerPoint.y
+            },
+        containerPoint:
+            {
+                x: ev.containerPoint.x,
+                y: ev.containerPoint.y
             }
-        }
     }
+}
 
 exports.onMouseEventJS = function (eventName) {
-    return function (marker) {
+    return function (target) {
         return function (action) {
             return function () {
                 var handler = function (ev) {
                     action(mkMouseEvent(ev))()
                 }
-                marker.on(eventName, handler)
+                target.on(eventName, handler)
                 return handler
             }
         }
@@ -22,10 +29,10 @@ exports.onMouseEventJS = function (eventName) {
 }
 
 exports.offMouseEventJS = function (eventName) {
-    return function (marker) {
+    return function (target) {
         return function (handler) {
             return function () {
-                marker.off(eventName, handler)
+                target.off(eventName, handler)
                 return null
             }
         }

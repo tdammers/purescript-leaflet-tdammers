@@ -26,5 +26,8 @@ main = do
   L.addLayer tiles m
   _ <- L.on L.Click m $ \(L.MouseEvent e) -> do
     marker <- L.marker e.latlng [Marker.draggable true]
-    L.addLayer marker m
+    L.addLayer (L.toLayer marker) m
+    _ <- L.on L.Click marker $ \(L.MouseEvent _) -> do
+      L.removeLayer (L.toLayer marker) m
+    pure unit
   pure unit
