@@ -20,9 +20,9 @@ import Leaflet.LatLng
   , latLngBounds
   ) as L
 import Leaflet.Map
-  ( Layer
-  , Map
+  ( Map
   , addLayer
+  , removeLayer
   , getCenter
   , getZoom
   , invalidateSize
@@ -31,6 +31,9 @@ import Leaflet.Map
   , onZoom
   , setView
   ) as L
+import Leaflet.Layer
+  ( Layer
+  )
 import Leaflet.MouseInteraction
   ( MouseEvent (..)
   , MouseEventType (..)

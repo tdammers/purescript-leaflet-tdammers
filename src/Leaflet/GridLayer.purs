@@ -30,8 +30,8 @@ import Data.Tuple (Tuple (..), fst, snd)
 import Leaflet.Types
 import Leaflet.LatLng
 import Leaflet.Options
-import Leaflet.Map (Layer, Map)
 import Data.Maybe (Maybe (..))
+import Leaflet.Layer (Layer)
 import Leaflet.Layer as Layer
 
 -- | Options to be passed to a tile layer at construction time. See

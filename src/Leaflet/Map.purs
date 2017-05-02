@@ -1,7 +1,7 @@
 module Leaflet.Map
-( Layer
-, Map
+( Map
 , addLayer
+, removeLayer
 , getCenter
 , getZoom
 , invalidateSize
@@ -28,12 +28,10 @@ import Leaflet.Types
 import Leaflet.LatLng
 import Leaflet.MouseInteraction
 import Leaflet.Evented
+import Leaflet.Layer
 
 -- | A map object (http://leafletjs.com/reference-1.0.3.html#map-example)
 foreign import data Map :: Type
-
--- | A map layer
-foreign import data Layer :: Type
 
 -- | `map domID latLng zoom` creates a new map object centered at `latLng`, at
 -- | zoom level `zoom`, and attaches it to the DOM element with ID `domID`.
@@ -48,6 +46,13 @@ foreign import addLayer :: forall e
                            . Layer
                           -> Map
                           -> Eff (leaflet :: LEAFLET | e) Unit
+
+-- | Remove a layer from a map
+foreign import removeLayer :: forall e
+                            . Layer
+                           -> Map
+                           -> Eff (leaflet :: LEAFLET | e) Unit
+
 
 -- | Set the current view for a map.
 foreign import setView :: forall e

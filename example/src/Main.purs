@@ -24,15 +24,7 @@ main = do
                   (L.latlng 51.0 1.0))
             ]
   L.addLayer tiles m
-  let coords =
-        [ L.latlng 50.0 0.0
-        , L.latlng 50.0 0.5
-        , L.latlng 50.5 0.0
-        , L.latlng 50.5 0.5
-        ]
-  _ <- for coords $ \ll -> do
-    marker <- L.marker ll [Marker.draggable true]
+  _ <- L.on L.Click m $ \(L.MouseEvent e) -> do
+    marker <- L.marker e.latlng [Marker.draggable true]
     L.addLayer marker m
-  h <- L.on L.MouseMove m $ \(L.MouseEvent e) -> do
-    log $ show [L.lat e.latlng, L.lng e.latlng]
   pure unit

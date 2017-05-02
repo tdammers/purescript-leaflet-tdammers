@@ -1,5 +1,6 @@
 module Leaflet.Layer
-( Option (..)
+( Layer
+, Option (..)
 , attribution
 )
 where
@@ -19,7 +20,6 @@ import Data.Tuple (Tuple (..), fst, snd)
 import Leaflet.Types
 import Leaflet.LatLng
 import Leaflet.Options
-import Leaflet.Map (Layer, Map)
 import Data.Maybe (Maybe (..))
 
 -- | Options to be passed to a layer at construction time. See
@@ -27,6 +27,9 @@ import Data.Maybe (Maybe (..))
 -- | each option.
 data Option
   = Attribution String
+
+-- | A map layer
+foreign import data Layer :: Type
 
 attribution :: String -> Option
 attribution = Attribution

@@ -43,9 +43,10 @@ import Data.Tuple (Tuple (..), fst, snd)
 import Leaflet.Types
 import Leaflet.LatLng
 import Leaflet.Options
-import Leaflet.Map (Layer, Map)
 import Data.Maybe (Maybe (..))
 import Leaflet.GridLayer as GridLayer
+import Leaflet.Layer (Layer)
+import Leaflet.Layer as Layer
 
 -- | A URL template for tile layers.
 type UrlTemplate = String

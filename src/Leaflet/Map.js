@@ -11,12 +11,20 @@ exports.map =
         }
     }
 
-
 exports.addLayer =
     function (layer) {
         return function (map) {
             return function () {
                 layer.addTo(map)
+            }
+        }
+    }
+
+exports.removeLayer =
+    function (layer) {
+        return function (map) {
+            return function () {
+                map.removeLayer(layer)
             }
         }
     }
