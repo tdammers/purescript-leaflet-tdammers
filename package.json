@@ -7,11 +7,6 @@
     "example": "example",
     "test": "test"
   },
-  "scripts": {
-    "example": "pulp browserify --to example/index.js -I example/src",
-    "build": "pulp build",
-    "test": "echo \"Error: no test specified\" && exit 1"
-  },
   "repository": {
     "type": "git",
     "url": "git+https://github.com/tdammers/purescript-leaflet-tdammers.git"
@@ -26,5 +21,14 @@
   "bugs": {
     "url": "https://github.com/tdammers/purescript-leaflet-tdammers/issues"
   },
-  "homepage": "https://github.com/tdammers/purescript-leaflet-tdammers#readme"
+  "homepage": "https://github.com/tdammers/purescript-leaflet-tdammers#readme",
+  "devDependencies": {
+      "pulp": "^11.0.0",
+      "purescript": "^0.11.0"
+  },
+  "scripts": {
+    "example": "pulp browserify --to example/index.js -I example/src",
+    "build": "pulp build",
+    "test": "pulp build --include test/src --to test/test.js"
+  }
 }
