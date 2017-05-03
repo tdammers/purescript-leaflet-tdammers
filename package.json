@@ -1,6 +1,6 @@
 {
   "name": "purescript-leaflet-tdammers",
-  "version": "0.0.5",
+  "version": "0.3.0",
   "description": "Purescript bindings for leaflet.js",
   "main": "index.js",
   "directories": {
